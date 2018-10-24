@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cxsoft.ssm.mapper.AccessDebugLogMapper" >
+  <resultMap id="BaseResultMap" type="cn.cxsoft.ssm.po.AccessDebugLog" >
+    <id column="unique_id" property="uniqueId" jdbcType="VARCHAR" />
+    <result column="client_ip" property="clientIp" jdbcType="VARCHAR" />
+    <result column="command" property="command" jdbcType="VARCHAR" />
+    <result column="debug_type" property="debugType" jdbcType="VARCHAR" />
+    <result column="gb_receive_rep_time" property="gbReceiveRepTime" jdbcType="TIMESTAMP" />
+    <result column="gb_receive_req_time" property="gbReceiveReqTime" jdbcType="TIMESTAMP" />
+    <result column="receive_rep_time" property="receiveRepTime" jdbcType="TIMESTAMP" />
+    <result column="receive_req_time" property="receiveReqTime" jdbcType="TIMESTAMP" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="vin" property="vin" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.cxsoft.ssm.po.AccessDebugLogWithBLOBs" extends="BaseResultMap" >
+    <result column="gb_rep_hex" property="gbRepHex" jdbcType="LONGVARCHAR" />
+    <result column="gb_rep_json" property="gbRepJson" jdbcType="LONGVARCHAR" />
+    <result column="gb_rep_readable_hex" property="gbRepReadableHex" jdbcType="LONGVARCHAR" />
+    <result column="gb_req_hex" property="gbReqHex" jdbcType="LONGVARCHAR" />
+    <result column="gb_req_json" property="gbReqJson" jdbcType="LONGVARCHAR" />
+    <result column="gb_req_readable_hex" property="gbReqReadableHex" jdbcType="LONGVARCHAR" />
+    <result column="rep_hex" property="repHex" jdbcType="LONGVARCHAR" />
+    <result column="rep_json" property="repJson" jdbcType="LONGVARCHAR" />
+    <result column="rep_readable_hex" property="repReadableHex" jdbcType="LONGVARCHAR" />
+    <result column="req_hex" property="reqHex" jdbcType="LONGVARCHAR" />
+    <result column="req_json" property="reqJson" jdbcType="LONGVARCHAR" />
+    <result column="req_readable_hex" property="reqReadableHex" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    unique_id, client_ip, command, debug_type, gb_receive_rep_time, gb_receive_req_time, 
+    receive_rep_time, receive_req_time, sn, vin
+  </sql>
+  <sql id="Blob_Column_List" >
+    gb_rep_hex, gb_rep_json, gb_rep_readable_hex, gb_req_hex, gb_req_json, gb_req_readable_hex, 
+    rep_hex, rep_json, rep_readable_hex, req_hex, req_json, req_readable_hex
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.cxsoft.ssm.po.AccessDebugLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from access_debug_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.cxsoft.ssm.po.AccessDebugLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from access_debug_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from access_debug_log
+    where unique_id = #{uniqueId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from access_debug_log
+    where unique_id = #{uniqueId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.cxsoft.ssm.po.AccessDebugLogExample" >
+    delete from access_debug_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.cxsoft.ssm.po.AccessDebugLogWithBLOBs" >
+    insert into access_debug_log (unique_id, client_ip, command, 
+      debug_type, gb_receive_rep_time, gb_receive_req_time, 
+      receive_rep_time, receive_req_time, sn, 
+      vin, gb_rep_hex, gb_rep_json, 
+      gb_rep_readable_hex, gb_req_hex, gb_req_json, 
+      gb_req_readable_hex, rep_hex, rep_json, 
+      rep_readable_hex, req_hex, req_json, 
+      req_readable_hex)
+    values (#{uniqueId,jdbcType=VARCHAR}, #{clientIp,jdbcType=VARCHAR}, #{command,jdbcType=VARCHAR}, 
+      #{debugType,jdbcType=VARCHAR}, #{gbReceiveRepTime,jdbcType=TIMESTAMP}, #{gbReceiveReqTime,jdbcType=TIMESTAMP}, 
+      #{receiveRepTime,jdbcType=TIMESTAMP}, #{receiveReqTime,jdbcType=TIMESTAMP}, #{sn,jdbcType=VARCHAR}, 
+      #{vin,jdbcType=VARCHAR}, #{gbRepHex,jdbcType=LONGVARCHAR}, #{gbRepJson,jdbcType=LONGVARCHAR}, 
+      #{gbRepReadableHex,jdbcType=LONGVARCHAR}, #{gbReqHex,jdbcType=LONGVARCHAR}, #{gbReqJson,jdbcType=LONGVARCHAR}, 
+      #{gbReqReadableHex,jdbcType=LONGVARCHAR}, #{repHex,jdbcType=LONGVARCHAR}, #{repJson,jdbcType=LONGVARCHAR}, 
+      #{repReadableHex,jdbcType=LONGVARCHAR}, #{reqHex,jdbcType=LONGVARCHAR}, #{reqJson,jdbcType=LONGVARCHAR}, 
+      #{reqReadableHex,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cxsoft.ssm.po.AccessDebugLogWithBLOBs" >
+    insert into access_debug_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uniqueId != null" >
+        unique_id,
+      </if>
+      <if test="clientIp != null" >
+        client_ip,
+      </if>
+      <if test="command != null" >
+        command,
+      </if>
+      <if test="debugType != null" >
+        debug_type,
+      </if>
+      <if test="gbReceiveRepTime != null" >
+        gb_receive_rep_time,
+      </if>
+      <if test="gbReceiveReqTime != null" >
+        gb_receive_req_time,
+      </if>
+      <if test="receiveRepTime != null" >
+        receive_rep_time,
+      </if>
+      <if test="receiveReqTime != null" >
+        receive_req_time,
+      </if>
+      <if test="sn != null" >
+        sn,
+      </if>
+      <if test="vin != null" >
+        vin,
+      </if>
+      <if test="gbRepHex != null" >
+        gb_rep_hex,
+      </if>
+      <if test="gbRepJson != null" >
+        gb_rep_json,
+      </if>
+      <if test="gbRepReadableHex != null" >
+        gb_rep_readable_hex,
+      </if>
+      <if test="gbReqHex != null" >
+        gb_req_hex,
+      </if>
+      <if test="gbReqJson != null" >
+        gb_req_json,
+      </if>
+      <if test="gbReqReadableHex != null" >
+        gb_req_readable_hex,
+      </if>
+      <if test="repHex != null" >
+        rep_hex,
+      </if>
+      <if test="repJson != null" >
+        rep_json,
+      </if>
+      <if test="repReadableHex != null" >
+        rep_readable_hex,
+      </if>
+      <if test="reqHex != null" >
+        req_hex,
+      </if>
+      <if test="reqJson != null" >
+        req_json,
+      </if>
+      <if test="reqReadableHex != null" >
+        req_readable_hex,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uniqueId != null" >
+        #{uniqueId,jdbcType=VARCHAR},
+      </if>
+      <if test="clientIp != null" >
+        #{clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="command != null" >
+        #{command,jdbcType=VARCHAR},
+      </if>
+      <if test="debugType != null" >
+        #{debugType,jdbcType=VARCHAR},
+      </if>
+      <if test="gbReceiveRepTime != null" >
+        #{gbReceiveRepTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gbReceiveReqTime != null" >
+        #{gbReceiveReqTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiveRepTime != null" >
+        #{receiveRepTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiveReqTime != null" >
+        #{receiveReqTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sn != null" >
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null" >
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="gbRepHex != null" >
+        #{gbRepHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gbRepJson != null" >
+        #{gbRepJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gbRepReadableHex != null" >
+        #{gbRepReadableHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gbReqHex != null" >
+        #{gbReqHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gbReqJson != null" >
+        #{gbReqJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gbReqReadableHex != null" >
+        #{gbReqReadableHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="repHex != null" >
+        #{repHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="repJson != null" >
+        #{repJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="repReadableHex != null" >
+        #{repReadableHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="reqHex != null" >
+        #{reqHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="reqJson != null" >
+        #{reqJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="reqReadableHex != null" >
+        #{reqReadableHex,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.cxsoft.ssm.po.AccessDebugLogExample" resultType="java.lang.Integer" >
+    select count(*) from access_debug_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update access_debug_log
+    <set >
+      <if test="record.uniqueId != null" >
+        unique_id = #{record.uniqueId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clientIp != null" >
+        client_ip = #{record.clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.command != null" >
+        command = #{record.command,jdbcType=VARCHAR},
+      </if>
+      <if test="record.debugType != null" >
+        debug_type = #{record.debugType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gbReceiveRepTime != null" >
+        gb_receive_rep_time = #{record.gbReceiveRepTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gbReceiveReqTime != null" >
+        gb_receive_req_time = #{record.gbReceiveReqTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.receiveRepTime != null" >
+        receive_rep_time = #{record.receiveRepTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.receiveReqTime != null" >
+        receive_req_time = #{record.receiveReqTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sn != null" >
+        sn = #{record.sn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vin != null" >
+        vin = #{record.vin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gbRepHex != null" >
+        gb_rep_hex = #{record.gbRepHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gbRepJson != null" >
+        gb_rep_json = #{record.gbRepJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gbRepReadableHex != null" >
+        gb_rep_readable_hex = #{record.gbRepReadableHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gbReqHex != null" >
+        gb_req_hex = #{record.gbReqHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gbReqJson != null" >
+        gb_req_json = #{record.gbReqJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gbReqReadableHex != null" >
+        gb_req_readable_hex = #{record.gbReqReadableHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.repHex != null" >
+        rep_hex = #{record.repHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.repJson != null" >
+        rep_json = #{record.repJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.repReadableHex != null" >
+        rep_readable_hex = #{record.repReadableHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.reqHex != null" >
+        req_hex = #{record.reqHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.reqJson != null" >
+        req_json = #{record.reqJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.reqReadableHex != null" >
+        req_readable_hex = #{record.reqReadableHex,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update access_debug_log
+    set unique_id = #{record.uniqueId,jdbcType=VARCHAR},
+      client_ip = #{record.clientIp,jdbcType=VARCHAR},
+      command = #{record.command,jdbcType=VARCHAR},
+      debug_type = #{record.debugType,jdbcType=VARCHAR},
+      gb_receive_rep_time = #{record.gbReceiveRepTime,jdbcType=TIMESTAMP},
+      gb_receive_req_time = #{record.gbReceiveReqTime,jdbcType=TIMESTAMP},
+      receive_rep_time = #{record.receiveRepTime,jdbcType=TIMESTAMP},
+      receive_req_time = #{record.receiveReqTime,jdbcType=TIMESTAMP},
+      sn = #{record.sn,jdbcType=VARCHAR},
+      vin = #{record.vin,jdbcType=VARCHAR},
+      gb_rep_hex = #{record.gbRepHex,jdbcType=LONGVARCHAR},
+      gb_rep_json = #{record.gbRepJson,jdbcType=LONGVARCHAR},
+      gb_rep_readable_hex = #{record.gbRepReadableHex,jdbcType=LONGVARCHAR},
+      gb_req_hex = #{record.gbReqHex,jdbcType=LONGVARCHAR},
+      gb_req_json = #{record.gbReqJson,jdbcType=LONGVARCHAR},
+      gb_req_readable_hex = #{record.gbReqReadableHex,jdbcType=LONGVARCHAR},
+      rep_hex = #{record.repHex,jdbcType=LONGVARCHAR},
+      rep_json = #{record.repJson,jdbcType=LONGVARCHAR},
+      rep_readable_hex = #{record.repReadableHex,jdbcType=LONGVARCHAR},
+      req_hex = #{record.reqHex,jdbcType=LONGVARCHAR},
+      req_json = #{record.reqJson,jdbcType=LONGVARCHAR},
+      req_readable_hex = #{record.reqReadableHex,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update access_debug_log
+    set unique_id = #{record.uniqueId,jdbcType=VARCHAR},
+      client_ip = #{record.clientIp,jdbcType=VARCHAR},
+      command = #{record.command,jdbcType=VARCHAR},
+      debug_type = #{record.debugType,jdbcType=VARCHAR},
+      gb_receive_rep_time = #{record.gbReceiveRepTime,jdbcType=TIMESTAMP},
+      gb_receive_req_time = #{record.gbReceiveReqTime,jdbcType=TIMESTAMP},
+      receive_rep_time = #{record.receiveRepTime,jdbcType=TIMESTAMP},
+      receive_req_time = #{record.receiveReqTime,jdbcType=TIMESTAMP},
+      sn = #{record.sn,jdbcType=VARCHAR},
+      vin = #{record.vin,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cxsoft.ssm.po.AccessDebugLogWithBLOBs" >
+    update access_debug_log
+    <set >
+      <if test="clientIp != null" >
+        client_ip = #{clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="command != null" >
+        command = #{command,jdbcType=VARCHAR},
+      </if>
+      <if test="debugType != null" >
+        debug_type = #{debugType,jdbcType=VARCHAR},
+      </if>
+      <if test="gbReceiveRepTime != null" >
+        gb_receive_rep_time = #{gbReceiveRepTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gbReceiveReqTime != null" >
+        gb_receive_req_time = #{gbReceiveReqTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiveRepTime != null" >
+        receive_rep_time = #{receiveRepTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiveReqTime != null" >
+        receive_req_time = #{receiveReqTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sn != null" >
+        sn = #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null" >
+        vin = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="gbRepHex != null" >
+        gb_rep_hex = #{gbRepHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gbRepJson != null" >
+        gb_rep_json = #{gbRepJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gbRepReadableHex != null" >
+        gb_rep_readable_hex = #{gbRepReadableHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gbReqHex != null" >
+        gb_req_hex = #{gbReqHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gbReqJson != null" >
+        gb_req_json = #{gbReqJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gbReqReadableHex != null" >
+        gb_req_readable_hex = #{gbReqReadableHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="repHex != null" >
+        rep_hex = #{repHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="repJson != null" >
+        rep_json = #{repJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="repReadableHex != null" >
+        rep_readable_hex = #{repReadableHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="reqHex != null" >
+        req_hex = #{reqHex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="reqJson != null" >
+        req_json = #{reqJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="reqReadableHex != null" >
+        req_readable_hex = #{reqReadableHex,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where unique_id = #{uniqueId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.cxsoft.ssm.po.AccessDebugLogWithBLOBs" >
+    update access_debug_log
+    set client_ip = #{clientIp,jdbcType=VARCHAR},
+      command = #{command,jdbcType=VARCHAR},
+      debug_type = #{debugType,jdbcType=VARCHAR},
+      gb_receive_rep_time = #{gbReceiveRepTime,jdbcType=TIMESTAMP},
+      gb_receive_req_time = #{gbReceiveReqTime,jdbcType=TIMESTAMP},
+      receive_rep_time = #{receiveRepTime,jdbcType=TIMESTAMP},
+      receive_req_time = #{receiveReqTime,jdbcType=TIMESTAMP},
+      sn = #{sn,jdbcType=VARCHAR},
+      vin = #{vin,jdbcType=VARCHAR},
+      gb_rep_hex = #{gbRepHex,jdbcType=LONGVARCHAR},
+      gb_rep_json = #{gbRepJson,jdbcType=LONGVARCHAR},
+      gb_rep_readable_hex = #{gbRepReadableHex,jdbcType=LONGVARCHAR},
+      gb_req_hex = #{gbReqHex,jdbcType=LONGVARCHAR},
+      gb_req_json = #{gbReqJson,jdbcType=LONGVARCHAR},
+      gb_req_readable_hex = #{gbReqReadableHex,jdbcType=LONGVARCHAR},
+      rep_hex = #{repHex,jdbcType=LONGVARCHAR},
+      rep_json = #{repJson,jdbcType=LONGVARCHAR},
+      rep_readable_hex = #{repReadableHex,jdbcType=LONGVARCHAR},
+      req_hex = #{reqHex,jdbcType=LONGVARCHAR},
+      req_json = #{reqJson,jdbcType=LONGVARCHAR},
+      req_readable_hex = #{reqReadableHex,jdbcType=LONGVARCHAR}
+    where unique_id = #{uniqueId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cxsoft.ssm.po.AccessDebugLog" >
+    update access_debug_log
+    set client_ip = #{clientIp,jdbcType=VARCHAR},
+      command = #{command,jdbcType=VARCHAR},
+      debug_type = #{debugType,jdbcType=VARCHAR},
+      gb_receive_rep_time = #{gbReceiveRepTime,jdbcType=TIMESTAMP},
+      gb_receive_req_time = #{gbReceiveReqTime,jdbcType=TIMESTAMP},
+      receive_rep_time = #{receiveRepTime,jdbcType=TIMESTAMP},
+      receive_req_time = #{receiveReqTime,jdbcType=TIMESTAMP},
+      sn = #{sn,jdbcType=VARCHAR},
+      vin = #{vin,jdbcType=VARCHAR}
+    where unique_id = #{uniqueId,jdbcType=VARCHAR}
+  </update>
+</mapper>
